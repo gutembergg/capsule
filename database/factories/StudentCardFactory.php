@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Enums\SchoolEnum;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,12 @@ class StudentCardFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'school' => $this->faker->randomElement(SchoolEnum::cases()),
+            'description' => $this->faker->text(),
+            'is_internal' => $this->faker->boolean(),
+            'user_id' => User::factory(),
+            'date_of_birth' => $this->faker->dateTimeBetween('-50 years', '-12 years')
+                ->format('y-m-d')
         ];
     }
 }
