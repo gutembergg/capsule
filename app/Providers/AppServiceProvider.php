@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use App\Contracts\StudentCardRepositoryInterface;
-use App\Repository\StudentCardRepository;
+use App\Repositories\StudentCardRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider

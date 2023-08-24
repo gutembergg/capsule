@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 interface StudentCardRepositoryInterface
 {
-    public function index(): void;
+    public function index(): array;
     public function create(): array;
     public function store(Request $data): void;
     public function update(array $data, string $id): void;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Repository;
+namespace App\Repositories;
 
 use App\Contracts\StudentCardRepositoryInterface;
 use App\Enums\SchoolEnum;
@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class StudentCardRepository implements StudentCardRepositoryInterface
 {
-    public function index(): void
-    {
-    }
-
-    public function create(): array
+    public function index(): array
     {
         $users = User::whereNot('id', auth()->id())->get();
         $schools = SchoolEnum::cases();
@@ -22,6 +18,11 @@ class StudentCardRepository implements StudentCardRepositoryInterface
             'users' => $users,
             'schools' => $schools
         ];
+    }
+
+    public function create(): array
+    {
+        return [];
     }
 
     public function store(Request $data): void

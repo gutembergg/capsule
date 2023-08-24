@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Services\StudentCardCreateService;
-use App\Services\StudentCardStoreService;
+use App\Services\StudentCardService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class StudentCardController extends Controller
 {
 
+    public function __construct(private StudentCardService $service)
+    {
+    }
     /**
      * Display a listing of the resource.
      */
@@ -24,8 +26,8 @@ class StudentCardController extends Controller
      */
     public function create(): View
     {
-        //$data = (new StudentCardCreateService)();
-        return view('student_cards.create', ['users' => User::with('school')]);
+        $data = $this->service->create();
+        return view('student_cards.create', ['users' => $data['users'], 'schools' => $data['schools']]);
     }
 
     /**
