@@ -45,7 +45,6 @@ class User extends Authenticatable
     ];
 
     /**
-     *
      * @return HasOne<StudentCard>
      */
     public function studentCard(): HasOne

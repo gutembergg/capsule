@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests\StudentCard;
 
+use App\Enums\SchoolEnum;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rules\Enum;
 
 class StudentCardRequest extends FormRequest
 {
@@ -17,17 +19,29 @@ class StudentCardRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<int|string|Enum>|string>
      */
     public function rules(): array
     {
         return [
-          /*   'user_id' => 
-            $table->string('school')->default(SchoolEnum::ROUSSEAU->value);
-            $table->text('description')->nullable();
-            $table->boolean('is_internal')->default(false);
-            $table->foreignIdFor(User::class)->constrained()->cascadeOnDelete();
-            $table->date('date_of_birth'); */
+            'user_id' => ['required', 'exists:users,id'],
+            'school' => ['required',  new Enum(type: SchoolEnum::class)],
+            'description' => ['nullable', 'min:10', 'max:700'],
+            'is_internal' => ['required', 'boolean'],
+            'date_of_birth' => [
+                'required',
+                'date_format:Y-m-d',
+                'before:-12 years',
+                'after:dat-50 years',
+            ],
+
         ];
+    }
+
+    public function prepareForValidation()
+    {
+        $this->merge([
+            'is_internal' => $this->boolean('is_internal'),
+        ]);
     }
 }

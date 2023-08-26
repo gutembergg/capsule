@@ -3,7 +3,6 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -22,4 +21,4 @@ Route::middleware('auth')->group(function () {
         ->group(base_path('routes/students-card/web.php'));
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

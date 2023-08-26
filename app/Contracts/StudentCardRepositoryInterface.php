@@ -2,13 +2,27 @@
 
 namespace App\Contracts;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StudentCard\StudentCardRequest;
+use App\Models\StudentCard;
+use Illuminate\Support\Collection;
 
 interface StudentCardRepositoryInterface
 {
+    /**
+     *
+     * @return array<Collection>
+     */
     public function index(): array;
+
+    /**
+     * 
+     * @return array<Collection>
+     */
     public function create(): array;
-    public function store(Request $data): void;
-    public function update(array $data, string $id): void;
+
+    public function store(StudentCardRequest $data): StudentCard;
+
+    public function update(StudentCard $data, string $id): void;
+
     public function destroy(string $id): void;
 }

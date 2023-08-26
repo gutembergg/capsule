@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\Contracts\StudentCardRepositoryInterface;
-use Illuminate\Http\Request;
+use App\DTOS\StudentCardCreateDTO;
+use App\Http\Requests\StudentCard\StudentCardRequest;
+use App\Models\StudentCard;
 
 class StudentCardService
 {
@@ -11,16 +13,15 @@ class StudentCardService
     {
     }
 
-    public function create()
+    public function create(): StudentCardCreateDTO
     {
-        $data = $this->repo->index();
-        return [
-            'users' => $data['users'],
-            'schools' => $data['schools']
-        ];
+        $data = $this->repo->create();
+        $dto = new StudentCardCreateDTO($data['users'], $data['schools']);
+
+        return $dto;
     }
 
-    public function store(Request $request)
+    public function store(StudentCardRequest $request): StudentCard
     {
         return $this->repo->store($request);
     }

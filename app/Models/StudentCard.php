@@ -11,14 +11,21 @@ class StudentCard extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'school',
+        'is_internal',
+        'date_of_birth',
+        'description',
+        'user_id',
+    ];
+
     protected $casts = [
         'school' => SchoolEnum::class,
         'is_internal' => 'boolean',
-        'date_of_birth' => 'date'
+        'date_of_birth' => 'date',
     ];
 
     /**
-     *
      * @return BelongsTo<User, StudentCard>
      */
     public function user(): BelongsTo

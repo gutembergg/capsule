@@ -24,7 +24,7 @@ class StudentCardFactory extends Factory
             'is_internal' => $this->faker->boolean(),
             'user_id' => User::factory(),
             'date_of_birth' => $this->faker->dateTimeBetween('-50 years', '-12 years')
-                ->format('y-m-d')
+                ->format('Y-m-d'),
         ];
     }
 }
