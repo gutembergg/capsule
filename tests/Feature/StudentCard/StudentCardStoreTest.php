@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Actions\StudentCard\GeneratePDF;
 use Tests\TestCase;
 use App\Models\User;
 use App\Enums\SchoolEnum;
@@ -9,6 +10,7 @@ use App\Models\StudentCard;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Mockery\MockInterface;
 
 class StudentCardStoreTest extends TestCase
 {
@@ -16,6 +18,11 @@ class StudentCardStoreTest extends TestCase
 
     public function test_can_store_student_card(): void
     {
+
+        $mock = $this->mock(GeneratePDF::class, function (MockInterface $mock) {
+            $mock->shouldReceive('handle')->once();
+        });
+
         $user = User::factory()->create();
 
         $this->actingAs($user)
@@ -26,7 +33,7 @@ class StudentCardStoreTest extends TestCase
                 'is_internal' => $is_internal = fake()->boolean,
                 'date_of_birth' => $date = Carbon::create(2000, 1, 1)->format('Y-m-d')
             ])
-            ->assertOk();
+            ->assertRedirectToRoute('dashboard');
 
         $this->assertDatabaseCount('student_cards', 1);
 

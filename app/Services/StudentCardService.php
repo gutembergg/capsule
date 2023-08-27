@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Actions\StudentCard\GeneratePDF;
 use App\Contracts\StudentCardRepositoryInterface;
 use App\DTOS\StudentCardCreateDTO;
 use App\Http\Requests\StudentCard\StudentCardRequest;
@@ -23,6 +24,11 @@ class StudentCardService
 
     public function store(StudentCardRequest $request): StudentCard
     {
-        return $this->repo->store($request);
+        app(GeneratePDF::class)->handle(
+            $card = StudentCard::create($request->validated()),
+            config('student-cards.pdf.directory')
+        );
+
+        return $card;
     }
 }

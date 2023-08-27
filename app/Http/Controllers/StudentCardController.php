@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentCard\StudentCardRequest;
 use App\Services\StudentCardService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -34,9 +35,11 @@ class StudentCardController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StudentCardRequest $request): void
+    public function store(StudentCardRequest $request): RedirectResponse
     {
         $this->service->store($request);
+
+        return redirect()->route('dashboard');
     }
 
     /**
