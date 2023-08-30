@@ -16,10 +16,13 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                        <x-nav-link :href="route('student-cards.create')" 
+                        @can('student-cards.create')
+                            <x-nav-link :href="route('student-cards.create')" 
                                     :active="request()->routeIs('student-cards.create')">
                             {{ __('Carte d\'étudiant') }}
                         </x-nav-link>
+                        @endcan
+                        
                     </div>
                 </div>
             </div>

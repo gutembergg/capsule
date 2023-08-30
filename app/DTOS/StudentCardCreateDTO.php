@@ -2,7 +2,6 @@
 
 namespace App\DTOS;
 
-use App\Enums\SchoolEnum;
 use Illuminate\Support\Collection;
 
 class StudentCardCreateDTO

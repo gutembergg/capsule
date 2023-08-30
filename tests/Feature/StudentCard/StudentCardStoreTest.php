@@ -2,28 +2,35 @@
 
 namespace Tests\Feature;
 
-use App\Actions\StudentCard\GeneratePDF;
+use Carbon\Carbon;
 use Tests\TestCase;
 use App\Models\User;
+use App\Enums\RoleEnum;
 use App\Enums\SchoolEnum;
-use App\Models\StudentCard;
-use Carbon\Carbon;
-use Illuminate\Support\Str;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
+use App\Models\StudentCard;
+use Illuminate\Support\Str;
+use Database\Seeders\RoleSeeder;
+use App\Actions\StudentCard\GeneratePDF;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StudentCardStoreTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_can_store_student_card(): void
+    public function test_can_store_student_card_for_both_teacher_and_super_admin(): void
     {
+        $this->seed(RoleSeeder::class);
 
-        $mock = $this->mock(GeneratePDF::class, function (MockInterface $mock) {
+        $this->mock(GeneratePDF::class, function (MockInterface $mock) {
             $mock->shouldReceive('handle')->once();
         });
 
-        $user = User::factory()->create();
+        $user = User::factory()
+            ->create()
+            ->assignRole(
+                fake()->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::SUPER_ADMIN->value])
+            );
 
         $this->actingAs($user)
             ->post(route('student-cards.store'), [
@@ -31,7 +38,7 @@ class StudentCardStoreTest extends TestCase
                 'school' => $school = fake()->randomElement(SchoolEnum::cases())->value,
                 'description' => $description = Str::random(16),
                 'is_internal' => $is_internal = fake()->boolean,
-                'date_of_birth' => $date = Carbon::create(2000, 1, 1)->format('Y-m-d')
+                'date_of_birth' => $date = Carbon::create(2000, 1, 1)->format('Y-m-d'),
             ])
             ->assertRedirectToRoute('dashboard');
 
@@ -46,20 +53,48 @@ class StudentCardStoreTest extends TestCase
         $this->assertEquals($studentCard->date_of_birth->format('Y-m-d'), $date);
     }
 
+
+    public function test_can_not_store_student_card_for_student(): void
+    {
+        $this->seed(RoleSeeder::class);
+
+        $user = User::factory()
+            ->create()
+            ->assignRole(
+                RoleEnum::STUDENT->value
+            );
+
+        $this->actingAs($user)
+            ->post(route('student-cards.store'), [
+                'user_id' => User::factory()->create()->id,
+                'school' => fake()->randomElement(SchoolEnum::cases())->value,
+                'description' => Str::random(16),
+                'is_internal' => fake()->boolean,
+                'date_of_birth' => Carbon::create(2000, 1, 1)->format('Y-m-d'),
+            ])
+            ->assertForbidden();
+
+        $this->assertDatabaseCount('student_cards', 0);
+    }
+
     public function test_can_not_store_student_card(): void
     {
-        $user = User::factory()->create();
+        $this->seed(RoleSeeder::class);
+
+        $user = User::factory()->create()->assignRole(
+            fake()->randomElement([RoleEnum::SUPER_ADMIN->value, RoleEnum::SUPER_ADMIN->value])
+        );
 
         $this->actingAs($user)
             ->post(route('student-cards.store'), [
                 'description' => Str::random(2),
-                'date_of_birth' => Carbon::create(2000, 1, 1)->format('d-m-Y')
+                'date_of_birth' => Carbon::create(2000, 1, 1)->format('d-m-Y'),
             ])
             ->assertSessionHasErrors([
                 'user_id',
                 'school',
                 'description',
-                'date_of_birth'
+                'date_of_birth',
 
             ]);
 

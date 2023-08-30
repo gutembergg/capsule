@@ -7,7 +7,6 @@ use App\Enums\SchoolEnum;
 use App\Http\Requests\StudentCard\StudentCardRequest;
 use App\Models\StudentCard;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class StudentCardRepository implements StudentCardRepositoryInterface
 {
@@ -17,8 +16,6 @@ class StudentCardRepository implements StudentCardRepositoryInterface
     }
 
     /**
-     * 
-     *
      * @return array<mixed>
      */
     public function create(): array

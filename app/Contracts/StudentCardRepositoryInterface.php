@@ -9,13 +9,11 @@ use Illuminate\Support\Collection;
 interface StudentCardRepositoryInterface
 {
     /**
-     *
      * @return array<Collection>
      */
     public function index(): array;
 
     /**
-     * 
      * @return array<Collection>
      */
     public function create(): array;

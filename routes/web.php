@@ -18,7 +18,8 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('student-cards')
         ->name('student-cards.')
+        ->middleware('can:student-cards')
         ->group(base_path('routes/students-card/web.php'));
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

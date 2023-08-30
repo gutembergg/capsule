@@ -3,12 +3,12 @@
 namespace App\Models;
 
 use App\Enums\SchoolEnum;
-use Spatie\MediaLibrary\HasMedia;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 
 class StudentCard extends Model implements HasMedia
@@ -30,7 +30,6 @@ class StudentCard extends Model implements HasMedia
         'date_of_birth' => 'date',
     ];
 
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('pdf')
@@ -44,7 +43,6 @@ class StudentCard extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
-
 
     /**
      * @return MorphOne<Media>

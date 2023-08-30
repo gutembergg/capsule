@@ -18,7 +18,7 @@ class GeneratePDF
             Storage::makeDirectory($directory);
         }
 
-        $pdf->save($path = Storage::path($directory) . DIRECTORY_SEPARATOR . $card->id . config('student-cards.pdf.extension'));
+        $pdf->save($path = Storage::path($directory).DIRECTORY_SEPARATOR.$card->id.config('student-cards.pdf.extension'));
 
         $card->addMedia($path)->toMediaCollection('pdf');
 
