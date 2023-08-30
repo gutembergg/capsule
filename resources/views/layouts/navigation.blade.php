@@ -22,6 +22,14 @@
                             {{ __('Carte d\'étudiant') }}
                         </x-nav-link>
                         @endcan
+
+                        @role(App\Enums\RoleEnum::STUDENT->value)
+                        <x-nav-link :href="route('calendar')" :active="request()->routeIs('calendar')">
+                            {{ __('Emploi du temps') }}
+                        </x-nav-link>
+
+                        @endrole
+                     
                         
                     </div>
                 </div>

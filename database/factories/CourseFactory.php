@@ -17,7 +17,11 @@ class CourseFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => fake()->words(random_int(1, 4), true),
+            'color' => fake()->colorName(),
+            'starts_at' => now(),
+            'ends_at' => now()->addHour()
+
         ];
     }
 }
