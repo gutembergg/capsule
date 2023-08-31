@@ -24,4 +24,4 @@ Route::middleware('auth')->group(function () {
         ->group(base_path('routes/students-card/web.php'));
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

@@ -4,16 +4,15 @@ namespace App\Http\Controllers\Api\Events;
 
 use App\Http\Controllers\Controller;
 use App\Models\Course;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(): JsonResponse
     {
         /**
-         * @var User 
+         * @var User
          */
         $user = auth()->user();
         $coursesIds = $user->courses()->pluck('id');
@@ -27,13 +26,12 @@ class IndexController extends Controller
                     'color' => $course->color,
                     'start' => $course->starts_at->format('Y-m-d H:i:s'),
                     'end' => $course->ends_at->format('Y-m-d H:i:s'),
-                    'borderColor' => $coursesIds->contains($coursesId) ? 'green' : 'yellow'
+                    'borderColor' => $coursesIds->contains($coursesId) ? 'green' : 'yellow',
                 ];
             });
 
-
         return response()->json([
-            'events' => $events
+            'events' => $events,
         ]);
     }
 }

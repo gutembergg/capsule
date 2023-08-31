@@ -13,32 +13,6 @@ Alpine.start();
 document.addEventListener('DOMContentLoaded', async function() {
     const calendarEl = document.querySelector('#calendar');
 
-    const eventsFake = [
-        {
-            id: 1,
-            title: 'Event one',
-            color: 'DarkSlateBlue',
-            start: '2023-08-22 09:00:00',
-            end: '2023-08-22 10:00:00',
-            borderColor: "green"
-        },
-        {
-            id: 2,
-            title: 'Event two',
-            color: 'Teal',
-            start: '2023-08-22 10:00:00',
-            end: '2023-08-22 11:00:00',
-            borderColor: "green"
-        }, {
-            id: 3,
-            title: 'Event three',
-            color: 'LightCoral',
-            start: '2023-08-22 14:00:00',
-            end: '2023-08-22 16:00:00',
-            borderColor: "green"
-        }
-    ];
-
     if (calendarEl == null) return;
 
     const { data } = await axios.get('/api/events');

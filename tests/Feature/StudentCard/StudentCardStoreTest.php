@@ -2,17 +2,17 @@
 
 namespace Tests\Feature;
 
-use Carbon\Carbon;
-use Tests\TestCase;
-use App\Models\User;
+use App\Actions\StudentCard\GeneratePDF;
 use App\Enums\RoleEnum;
 use App\Enums\SchoolEnum;
-use Mockery\MockInterface;
 use App\Models\StudentCard;
-use Illuminate\Support\Str;
+use App\Models\User;
+use Carbon\Carbon;
 use Database\Seeders\RoleSeeder;
-use App\Actions\StudentCard\GeneratePDF;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
+use Mockery\MockInterface;
+use Tests\TestCase;
 
 class StudentCardStoreTest extends TestCase
 {
@@ -52,7 +52,6 @@ class StudentCardStoreTest extends TestCase
         $this->assertEquals($studentCard->is_internal, $is_internal);
         $this->assertEquals($studentCard->date_of_birth->format('Y-m-d'), $date);
     }
-
 
     public function test_can_not_store_student_card_for_student(): void
     {

@@ -20,7 +20,7 @@ class CourseFactory extends Factory
             'title' => fake()->words(random_int(1, 4), true),
             'color' => fake()->colorName(),
             'starts_at' => now(),
-            'ends_at' => now()->addHour()
+            'ends_at' => now()->addHour(),
 
         ];
     }

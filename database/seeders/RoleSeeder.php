@@ -4,9 +4,8 @@ namespace Database\Seeders;
 
 use App\Enums\RoleEnum;
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -17,7 +16,7 @@ class RoleSeeder extends Seeder
     {
         foreach (RoleEnum::cases() as $roleEnum) {
             Role::create([
-                'name' => $roleEnum->value
+                'name' => $roleEnum->value,
             ]);
         }
 
