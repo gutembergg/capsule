@@ -54,10 +54,8 @@ class User extends Authenticatable
         return $this->hasOne(StudentCard::class);
     }
 
-
-
     /**
-     * @return BelongsToMany<Course, User>
+     * @return BelongsToMany<Course>
      */
     public function courses(): BelongsToMany
     {

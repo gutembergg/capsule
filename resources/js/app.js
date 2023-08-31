@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     if (calendarEl == null) return;
 
-    //const { data } = await axios.get('/api/events');
+    const { data } = await axios.get('/api/events');
 
     const calendar = new Calendar(calendarEl, {
         plugins: [ timeGridPlugin ],
@@ -55,7 +55,7 @@ document.addEventListener('DOMContentLoaded', async function() {
 
             info.el.style.borderColor = data.attached === true ? 'green' : 'yellow';
         },
-        events: eventsFake,
+        events: data.events,
     });
 
     calendar.setOption('locale', 'fr');
